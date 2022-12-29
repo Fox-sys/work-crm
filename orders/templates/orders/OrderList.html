@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block title %}Список заказов{% endblock %}
+{% block content %}
+    {% for order in orders %}
+    {% empty %}
+        Заказов нет
+    {% endfor %}
+{% endblock %}

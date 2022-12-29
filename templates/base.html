@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+{% load bootstrap5 %}
+{% load static %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% bootstrap_messages %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    {% include 'header.html' %}
+    <main class="container mt-5">
+        <div class="content container-fluid d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start bg-light">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+</body>
+</html>
