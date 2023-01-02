@@ -1,8 +1,53 @@
 {% extends 'base.html' %}
 {% block title %}Список заказов{% endblock %}
+{% block before_content %}
+<div class="container mt-3">
+    <div class="d-flex flex-wrap justify-content-lg-end">
+        <a class="btn btn-primary" href="#">Создать заказ</a>
+    </div>
+</div>
+{% endblock %}
 {% block content %}
-    {% for order in orders %}
-    {% empty %}
-        Заказов нет
-    {% endfor %}
+<div class="mt-2 mb-2 w-100 p-3">
+    {% if order_list %}
+    <div class="table-responsive">
+        <table class="table text-md-nowrap table_with_sorting">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Название</th>
+                <th>Клиент</th>
+                <th>Статус</th>
+                <th>Закрыт</th>
+                <th>Оплачен</th>
+                <th>Дедлайн</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for order in order_list %}
+            <tr>
+                <td>{{ order.id }}</td>
+                <td class="w-25">
+                    <a href="{{ order.get_absolute_url }}">
+                        {{ order.title }}
+                    </a>
+                </td>
+                <td>
+                    {{ order.client }}
+                </td>
+                <td>
+                    {{ order.status }}
+                </td>
+                <td><img src="/static/admin/img/{% if order.closed %}icon-yes{% else %}icon-no{% endif %}.svg" alt="{{ order.closed }}"></td>
+                <td><img src="/static/admin/img/{% if order.payed %}icon-yes{% else %}icon-no{% endif %}.svg" alt="{{ order.payed }}"></td>
+                <td>{{ order.deadline }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    Заказов нет
+    {% endif %}
+</div>
 {% endblock %}

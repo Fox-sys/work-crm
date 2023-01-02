@@ -11,9 +11,14 @@
 </head>
 <body>
     {% include 'header.html' %}
-    <main class="container mt-5">
-        <div class="content container-fluid d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start bg-light">
-            {% block content %}{% endblock %}
+    <div class="before_content mt-3">
+            {% block before_content %}{% endblock %}
+    </div>
+    <main class="container mt-2">
+        <div class="bg-light">
+            <div class="d-flex flex-wrap align-items-center justify-content-center">
+                {% block content %}{% endblock %}
+            </div>
         </div>
     </main>
 </body>
