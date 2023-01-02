@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %}Список клиентов{% endblock %}
+{% block before_content %}
+<div class="container mt-3">
+    <div class="d-flex flex-wrap justify-content-lg-end">
+        <a class="btn btn-primary" href="#">Добавить клиента</a>
+    </div>
+</div>
+{% endblock %}
+{% block content %}
+<div class="mt-2 mb-2 w-100 p-3">
+    {% if client_list %}
+    <div class="table-responsive">
+        <table class="table text-md-nowrap table_with_sorting">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Имя Фамилия</th>
+                <th>Телефон</th>
+                <th>Телеграм</th>
+                <th>Проблемный клиент</th>
+                <th>Количество проектов</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for client in client_list %}
+            <tr>
+                <td>{{ client.id }}</td>
+                <td class="w-25">
+                    <a href="{{ client.get_absolute_url }}">
+                        {{ client.name }} {{ client.lastname }}
+                    </a>
+                </td>
+                <td>{{ client.phone }}</td>
+                <td><a href="#">{{ client.telegram }}</a></td>
+                <td><img src="/static/admin/img/{% if client.problem_client %}icon-yes{% else %}icon-no{% endif %}.svg" alt="{{ client.problem_client }}"></td>
+                <td><a href="#">{{ client.orders.count }}</a></td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    Клиентов нет
+    {% endif %}
+</div>
+{% endblock %}
