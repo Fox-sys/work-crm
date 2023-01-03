@@ -3,7 +3,7 @@
 {% block before_content %}
 <div class="container mt-3">
     <div class="d-flex flex-wrap justify-content-lg-end">
-        <a class="btn btn-primary" href="#">Создать заказ</a>
+        <a class="btn btn-primary" href="{% url 'orders:order_create' %}">Создать заказ</a>
     </div>
 </div>
 {% endblock %}

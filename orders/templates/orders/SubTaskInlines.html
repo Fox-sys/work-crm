@@ -1,0 +1,82 @@
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+
+
+{% with inlines.0 as formset %}
+{% with formset.prefix as formset_prefix %}
+<div class="border border-light p-3">
+    <div class="scrollbar" id="{{ formset_prefix }}_scrollbar">
+
+        {{ formset.management_form }}
+
+        {% for form in formset.forms %}
+        <div>
+            <div class="row mb-3">
+                {% for hidden_field in form.hidden_fields %}
+                {{ hidden_field }}
+                {% endfor %}
+                <div class="row">
+                    <div class="col-2">{{ form.done|as_crispy_field }}</div>
+                    <div class="col-8">
+                        {{ form.title }}
+                    </div>
+                    <div class="col-2">{{ form.DELETE|as_crispy_field }}</div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+{#empty_form Start#}
+{% with formset.empty_form as empty_form %}
+<div id="{{ formset_prefix }}_empty_form" style="display:none">
+    <div id="added_{{ formset_prefix }}-__prefix__-HIDE">
+        <div class="row mb-3">
+            {% for hidden_field in empty_form.hidden_fields %}
+            {{ hidden_field }}
+            {% endfor %}
+
+            <div class="row">
+                <div class="col-2">{{ inlines.0.empty_form.done|as_crispy_field }}</div>
+                <div class="col-8">
+                    {{ inlines.0.empty_form.title|as_crispy_field }}
+                </div>
+                <div class="col-2">
+                    <div id="added_{{ formset_prefix }}-__prefix__-HIDE-btn"
+                         onclick="hide_element('#added_{{ formset_prefix }}-__prefix__-HIDE')">
+                        <button type="button" class="btn-close" aria-label="Close"></button>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endwith %}
+{#empty_form End#}
+
+<div class="add-message-btn">
+    <button
+            type="button"
+            class="pull-right btn btn-outline-primary mt-2"
+            onclick="add_subtask()">
+        Добавить подзадачу
+    </button>
+</div>
+<script>
+    function add_subtask() {
+        let total_forms = $('#id_{{ formset_prefix }}-TOTAL_FORMS');
+        let form_idx = total_forms.val();
+
+        $('#{{ formset_prefix }}_scrollbar').append($('#{{ formset_prefix }}_empty_form').html().replace(/__prefix__/g, form_idx));
+        total_forms.val(parseInt(form_idx) + 1);
+
+        let block = document.getElementById("{{ formset_prefix }}_scrollbar");
+        block.scrollTop = block.scrollHeight;
+    }
+
+</script>
+{% endwith %}
+{% endwith %}

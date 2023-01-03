@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<form method="post" class="m-3 p-3 w-100 bg-white" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="mt-3 mb-3">
+        <button type="submit" class="btn btn-success">Сохранить</button>
+    </div>
+
+    {% for field in form %}
+    <div class="mb-2" w-100>
+        {{ field|as_crispy_field }}
+    </div>
+    {% endfor %}
+
+    {% if model_name == 'Order' %}
+        {% include 'orders/SubTaskInlines.html' %}
+    {% endif %}
+</form>
+{% endblock %}
